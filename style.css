@@ -1,0 +1,10 @@
+:root{
+  --accent:#2aa44f;
+}
+body{font-family:Inter, system-ui, Arial, sans-serif; background:#f7f9f8;}
+.hero-img{max-height:200px; width:100%; object-fit:cover; border-radius:8px;}
+.card{border-radius:10px;}
+.product-img{height:140px; object-fit:cover; border-radius:6px;}
+#trackResult .step{display:flex; gap:12px; align-items:center; padding:8px 0;}
+#trackResult .dot{width:14px;height:14px;border-radius:50%;border:2px solid #ddd;}
+#trackResult .done .dot{background:var(--accent); border-color:var(--accent);}

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FARM2DOOR — Organic Products Delivery</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Simple custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-success" href="#home">FARM2DOOR</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="nav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#cart">Cart <span id="cartCount" class="badge bg-success ms-1">0</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#orders">Orders</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tracking">Tracking</a></li>
+        <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#analytics">Analytics</a></li>
+        <li class="nav-item"><a class="nav-link" href="#admin">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="py-5 bg-light">
+  <div class="container d-flex flex-column flex-md-row align-items-center gap-4">
+    <div class="flex-fill">
+      <h1 class="display-6">Fresh organic products — delivered to your door</h1>
+      <p class="lead text-muted">Local farms → clean products → fast delivery. Simple. Honest. Healthy.</p>
+      <a href="#products" class="btn btn-success">Shop Products</a>
+    </div>
+    <div class="flex-fill text-center">
+      <img src="https://plus.unsplash.com/premium_photo-1678344170545-c3edef92a16e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8b3JnYW5pYyUyMGZhcm18ZW58MHx8MHx8fDA%3D" alt="farm" class="img-fluid rounded shadow-sm hero-img">
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h4">Products</h2>
+      <div class="d-flex gap-2">
+        <input id="search" class="form-control" placeholder="Search product..." style="min-width:220px">
+        <select id="filter" class="form-select">
+          <option value="all">All Categories</option>
+          <option value="vegetables">Vegetables</option>
+          <option value="fruits">Fruits</option>
+          <option value="dairy">Dairy</option>
+        </select>
+      </div>
+    </div>
+    <div id="grid" class="row g-3">
+      <!-- products inserted by js -->
+    </div>
+  </div>
+</section>
+
+<!-- CART / CHECKOUT -->
+<section id="cart" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="h4 mb-3">Cart & Checkout</h2>
+    <div class="row">
+      <div class="col-lg-8">
+        <div id="cartList" class="list-group mb-3"></div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card p-3 shadow-sm">
+          <h5>Order Summary</h5>
+          <p>Items: <span id="itemCount">0</span></p>
+          <p>Total: $<span id="totalPrice">0.00</span></p>
+          <button id="checkoutBtn" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Checkout Modal (simple validation) -->
+<div class="modal fade" id="checkoutModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="checkoutForm" class="p-3">
+        <h5>Checkout</h5>
+        <div class="mb-2">
+          <input id="name" class="form-control" placeholder="Full name" required>
+        </div>
+        <div class="mb-2">
+          <input id="phone" class="form-control" placeholder="Phone" required>
+        </div>
+        <div class="mb-2">
+          <textarea id="address" class="form-control" placeholder="Address" rows="2" required></textarea>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-success">Place Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ORDERS -->
+<section id="orders" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="h4 mb-3">Your Orders</h2>
+    <div id="ordersArea" class="list-group"></div>
+  </div>
+</section>
+
+<!-- TRACKING -->
+<section id="tracking" class="py-5">
+  <div class="container">
+    <h2 class="h4 mb-3">Delivery Tracking</h2>
+    <div class="row g-3">
+      <div class="col-md-6 d-flex gap-2">
+        <input id="trackId" class="form-control" placeholder="Enter Order ID">
+        <button id="trackBtn" class="btn btn-outline-primary">Track</button>
+      </div>
+      <div class="col-12">
+        <div id="trackResult"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="h4 mb-3">Reviews</h2>
+    <form id="reviewForm" class="row g-2 mb-3">
+      <div class="col-md-4"><input id="rname" class="form-control" placeholder="Your name" required></div>
+      <div class="col-md-2">
+        <select id="rrating" class="form-select" required>
+          <option value="5">5</option><option value="4">4</option><option value="3">3</option>
+          <option value="2">2</option><option value="1">1</option>
+        </select>
+      </div>
+      <div class="col-md-6"><input id="rtext" class="form-control" placeholder="Write a short review" required></div>
+      <div class="col-12"><button class="btn btn-primary">Submit Review</button></div>
+    </form>
+    <div id="reviewsList"></div>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section id="analytics" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="h4 mb-3">Analytics (Demo)</h2>
+    <div class="row">
+      <div class="col-md-6"><canvas id="salesChart"></canvas></div>
+      <div class="col-md-6"><canvas id="prodChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN (frontend only) -->
+<section id="admin" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="h4 mb-3">Admin (Add Product)</h2>
+    <form id="addForm" class="row g-2 mb-3">
+      <div class="col-md-4"><input id="pname" class="form-control" placeholder="Name" required></div>
+      <div class="col-md-3"><input id="pcat" class="form-control" placeholder="Category" required></div>
+      <div class="col-md-3"><input id="pprice" type="number" class="form-control" placeholder="Price" required></div>
+      <div class="col-md-2"><button class="btn btn-outline-success w-100">Add</button></div>
+    </form>
+    <div id="adminList"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-4 bg-success text-white text-center">
+  <div class="container">© FARM2DOOR 2025 — Simple frontend prototype</div>
+</footer>
+
+<!-- bootstrap & app script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
